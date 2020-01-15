@@ -1,15 +1,16 @@
-import * as React from "react";
-import { getAllPeoples, getAllPeoplesFromPage } from '../services/swapi.js'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import getAllPeoples, { getAllPeoplesFromPage } from '../services/swapi.js';
+import Icon from '@mdi/react'
+import { mdiAccountBadgeHorizontal, mdiAppleKeyboardControl } from '@mdi/js'
 
-export class PeopleList extends React.Component {
-    state = {
-        people: [],
-        next: '',
-        prev: ''
+export class PeopleList extends Component {
+    constructor(props) {
+        super(props);
     }
 
     componentDidMount() {
-        getAllPeoples().then(people => {this.setState(people)});
+        this.props.getAllPeoples();
     }
 
     onePerson = people => {
@@ -19,38 +20,55 @@ export class PeopleList extends React.Component {
         return (
             <div className="card">
                 <header className="card-header">
-                    <p className="card-header-title">
-                        { name }
-                    </p>
-                    <a href={`people/${id}`}>Details</a>
+                    <a href={`person/${id}`}>
+                        <p className="card-header-title">
+                            { name }
+                        </p>
+                        <Icon path={mdiAccountBadgeHorizontal} size={1} />
+                    </a>
                 </header>
             </div>
         );
     }
 
     nextPage = () => {
-        if(this.state.next) {
-            getAllPeoplesFromPage(this.state.next).then(people => {this.setState(people)});
+        if(this.props.next) {
+            this.props.getAllPeoplesFromPage(this.props.next);
         }
     }
 
     prevPage = () => {
-        if(this.state.prev) {
-            getAllPeoplesFromPage(this.state.prev).then(people => {this.setState(people)});
+        if(this.props.prev) {
+            this.props.getAllPeoplesFromPage(this.props.prev);
         }
     }
 
     render() {
         return (
-            <div>
-                <ul id="c-PeopleList">
-                    { this.state.people.map(this.onePerson) }
+            <div className="c-peopleList">
+                <div className={"pageloader " + (this.props.isLoading ? 'is-active' : '')}><span className="title">Loading...</span></div>
+                <ul id="c-list">
+                    {this.props.peoples.map(this.onePerson)}
                 </ul>
-                <div className="c-paggination">
-                    <div className="c-prev button" onClick={this.prevPage}>Prev</div>
-                    <div className="c-next button" onClick={this.nextPage}>Next</div>
+                <div className="pagination is-centered">
+                    <a className="pagination-previous" onClick={this.prevPage}><Icon path={mdiAppleKeyboardControl} size={2} rotate={-90} color="white"/></a>
+                    <a className="pagination-next" onClick={this.nextPage}><Icon path={mdiAppleKeyboardControl} size={2} rotate={90} color="white" /></a>
                 </div>
             </div>
         );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        peoples: state.peoples,
+        next: state.next,
+        prev: state.prev,
+        isLoading: state.isLoading
+    };
+}
+
+export default connect(
+    mapStateToProps,
+    { getAllPeoples, getAllPeoplesFromPage }
+)(PeopleList);

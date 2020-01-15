@@ -1,5 +1,6 @@
 @charset "utf-8";
 @import "../../node_modules/bulma/bulma.sass";
+@import "../../node_modules/bulma-pageloader/dist/css/bulma-pageloader.sass";
 
 .App {
     text-align: center;
@@ -25,4 +26,65 @@
     justify-content: center;
     font-size: calc(10px + 2vmin);
     color: white;
+}
+.img-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: -1;
+    background-image: url("http://localhost:3000/galaxy.jpg");
+}
+
+.c-peopleList {
+    max-width: 350px;
+    margin: 30px auto 0;
+    opacity: 0.9;
+    .card-header {
+        a {
+            width: 100%;
+        }
+        p {
+            float: left;
+        }
+        svg {
+            margin-top: 8px;
+            margin-right: 8px;
+            float: right;
+        }
+    }
+    .pagination {
+        &-previous,
+        &-next {
+            border: 0;
+            :hover {
+                border: 0;
+            }
+        }
+    }
+
+}
+.c-person {
+    .card {
+        opacity: 0.9;
+        max-width: 350px;
+        margin: 30px auto 0;
+        &-content {
+            .media {
+                &-content {
+                    text-align: center;
+                }
+            }
+        }
+        .content {
+            padding-bottom: 1.5rem;
+            .titles {
+                text-align: right;
+                font-weight: bold;
+                ::after {
+                    content: ':';
+                }
+            }
+        }
+    }
 }

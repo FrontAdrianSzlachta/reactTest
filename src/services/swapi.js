@@ -1,50 +1,61 @@
 const swapiApiUrl = 'https://swapi.co/api/'
 const endpoints = {
-    people: swapiApiUrl + "people/",
-    planets: swapiApiUrl + "planets/",
-    films: swapiApiUrl + "films/",
-    species: swapiApiUrl + "species/",
-    vehicles: swapiApiUrl + "vehicles/",
-    starships: swapiApiUrl + "starships/"
+    people: swapiApiUrl + "people/"
 }
 
-function getAllPeoples() {
-    return fetch(endpoints.people, {
-        method: 'GET',
-        headers: new Headers({
-            'Content-Type': 'application/json; charset=utf-8',
-            'X-Requested-With': 'XMLHttpRequest'
+export default function getAllPeoples() {
+    return function(dispatch) {
+        dispatch({ type: "SET_LOADING", isLoading: true });
+        return fetch(endpoints.people, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=utf-8',
+                'X-Requested-With': 'XMLHttpRequest'
+            })
         })
-    })
-    .then((response) => response.json())
-    .then(json => {return{ people: json.results, next: json.next, prev: json.previous }});
-}
-
-function getAllPeoplesFromPage(link) {
-    return fetch(link, {
-        method: 'GET',
-        headers: new Headers({
-            'Content-Type': 'application/json; charset=utf-8',
-            'X-Requested-With': 'XMLHttpRequest'
-        })
-    })
         .then((response) => response.json())
-        .then(json => {return{ people: json.results, next: json.next, prev: json.previous }});
+        .then((json) => {
+            dispatch({ type: "SET_PEOPLES", peoples: json.results });
+            dispatch({ type: "SET_NEXT_PAGE", next: json.next });
+            dispatch({ type: "SET_PREVIOUS_PAGE", prev: json.previous });
+            dispatch({ type: "SET_LOADING", isLoading: false });
+        });
+    };
 }
 
-function getPerson(id) {
-    return fetch(endpoints.people+""+id+"/?format=json", {
-        method: 'GET',
-        headers: new Headers({
-            'Content-Type': 'application/json',
+export function getAllPeoplesFromPage(link) {
+    return function(dispatch) {
+        dispatch({ type: "SET_LOADING", isLoading: true });
+        return fetch(link, {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json; charset=utf-8',
+                'X-Requested-With': 'XMLHttpRequest'
+            })
         })
-    })
         .then((response) => response.json())
-        .then(json => {console.log(json);return { details: json }});
+        .then(json => {
+            dispatch({ type: "SET_PEOPLES", peoples: json.results });
+            dispatch({ type: "SET_NEXT_PAGE", next: json.next });
+            dispatch({ type: "SET_PREVIOUS_PAGE", prev: json.previous });
+            dispatch({ type: "SET_LOADING", isLoading: false });
+        });
+    }
 }
 
-export {
-    getAllPeoples,
-    getAllPeoplesFromPage,
-    getPerson
+export function getPerson(id) {
+    return function(dispatch) {
+        dispatch({ type: "SET_LOADING", isLoading: true });
+        return fetch(endpoints.people + "" + id + "/?format=json", {
+            method: 'GET',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
+        .then((response) => response.json())
+        .then(json => {
+            dispatch({ type: "SET_PERSON", person: json });
+            dispatch({ type: "SET_LOADING", isLoading: false });
+        });
+    }
 }
