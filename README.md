@@ -1,6 +1,14 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Run app
 
-## Available Scripts
+1. npm install
+2. npm run css-build
+3. npm start
+
+#####The configuration the application is running on:
+node v12.10.0
+npm 6.13.4
+
+### Available Scripts
 
 In the project directory, you can run:
 
@@ -37,6 +45,10 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `npm run css-build`
+
+Compile and build scss to css
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
@@ -66,3 +78,7 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
