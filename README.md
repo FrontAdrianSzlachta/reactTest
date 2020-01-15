@@ -4,7 +4,7 @@
 2. npm run css-build
 3. npm start
 
-#####The configuration the application is running on:
+####The configuration the application is running on:
 node v12.10.0
 npm 6.13.4
 
