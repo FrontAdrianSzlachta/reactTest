@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import getAllPeoples, { getAllPeoplesFromPage } from '../services/swapi.js';
+import getAllPeople, { getAllPeopleFromPage } from '../services/swapi.js';
 import Icon from '@mdi/react'
 import { mdiAccountBadgeHorizontal, mdiAppleKeyboardControl } from '@mdi/js'
 
@@ -10,7 +10,7 @@ export class PeopleList extends Component {
     }
 
     componentDidMount() {
-        this.props.getAllPeoples();
+        this.props.getAllPeople();
     }
 
     onePerson = people => {
@@ -33,13 +33,13 @@ export class PeopleList extends Component {
 
     nextPage = () => {
         if(this.props.next) {
-            this.props.getAllPeoplesFromPage(this.props.next);
+            this.props.getAllPeopleFromPage(this.props.next);
         }
     }
 
     prevPage = () => {
         if(this.props.prev) {
-            this.props.getAllPeoplesFromPage(this.props.prev);
+            this.props.getAllPeopleFromPage(this.props.prev);
         }
     }
 
@@ -48,7 +48,7 @@ export class PeopleList extends Component {
             <div className="c-peopleList">
                 <div className={"pageloader " + (this.props.isLoading ? 'is-active' : '')}><span className="title">Loading...</span></div>
                 <ul id="c-list">
-                    {this.props.peoples.map(this.onePerson)}
+                    {this.props.people.map(this.onePerson)}
                 </ul>
                 <div className="pagination is-centered">
                     <a className="pagination-previous" onClick={this.prevPage}><Icon path={mdiAppleKeyboardControl} size={2} rotate={-90} color="white"/></a>
@@ -61,7 +61,7 @@ export class PeopleList extends Component {
 
 function mapStateToProps(state) {
     return {
-        peoples: state.peoples,
+        people: state.people,
         next: state.next,
         prev: state.prev,
         isLoading: state.isLoading
@@ -70,5 +70,5 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps,
-    { getAllPeoples, getAllPeoplesFromPage }
+    { getAllPeople, getAllPeopleFromPage }
 )(PeopleList);

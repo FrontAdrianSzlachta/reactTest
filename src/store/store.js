@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 
 const initialState = {
-    peoples: [],
+    people: [],
     next: '',
     prev: '',
     person: {},
@@ -19,8 +19,8 @@ function rootReducer(state = initialState, action) {
             return {...state, next: action.next };
         case 'SET_PREVIOUS_PAGE':
             return {...state, prev: action.prev };
-        case 'SET_PEOPLES':
-            return {...state, peoples: action.peoples };
+        case 'SET_PEOPLE':
+            return {...state, people: action.people };
         case 'SET_PERSON':
             return {...state, person: action.person };
         case 'SET_LOADING':

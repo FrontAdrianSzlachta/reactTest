@@ -3,7 +3,7 @@ const endpoints = {
     people: swapiApiUrl + "people/"
 }
 
-export default function getAllPeoples() {
+export default function getAllPeople() {
     return function(dispatch) {
         dispatch({ type: "SET_LOADING", isLoading: true });
         return fetch(endpoints.people, {
@@ -15,7 +15,7 @@ export default function getAllPeoples() {
         })
         .then((response) => response.json())
         .then((json) => {
-            dispatch({ type: "SET_PEOPLES", peoples: json.results });
+            dispatch({ type: "SET_PEOPLE", people: json.results });
             dispatch({ type: "SET_NEXT_PAGE", next: json.next });
             dispatch({ type: "SET_PREVIOUS_PAGE", prev: json.previous });
             dispatch({ type: "SET_LOADING", isLoading: false });
@@ -23,7 +23,7 @@ export default function getAllPeoples() {
     };
 }
 
-export function getAllPeoplesFromPage(link) {
+export function getAllPeopleFromPage(link) {
     return function(dispatch) {
         dispatch({ type: "SET_LOADING", isLoading: true });
         return fetch(link, {
@@ -35,7 +35,7 @@ export function getAllPeoplesFromPage(link) {
         })
         .then((response) => response.json())
         .then(json => {
-            dispatch({ type: "SET_PEOPLES", peoples: json.results });
+            dispatch({ type: "SET_PEOPLE", people: json.results });
             dispatch({ type: "SET_NEXT_PAGE", next: json.next });
             dispatch({ type: "SET_PREVIOUS_PAGE", prev: json.previous });
             dispatch({ type: "SET_LOADING", isLoading: false });
